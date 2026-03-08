@@ -2329,7 +2329,7 @@ CREATE TABLE `combat_log` (
   KEY `enemy_id` (`enemy_id`),
   CONSTRAINT `combat_log_ibfk_1` FOREIGN KEY (`save_id`) REFERENCES `player_stats` (`save_id`) ON DELETE CASCADE,
   CONSTRAINT `combat_log_ibfk_2` FOREIGN KEY (`enemy_id`) REFERENCES `enemies` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2340,9 +2340,7 @@ LOCK TABLES `combat_log` WRITE;
 /*!40000 ALTER TABLE `combat_log` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `combat_log` VALUES
-(5,9,23,0,0,'2026-03-04 20:20:22'),
-(6,9,24,0,0,'2026-03-04 20:22:44'),
-(7,9,16,32,0,'2026-03-04 20:22:56');
+(53,1,24,0,0,'2026-03-08 12:21:11');
 /*!40000 ALTER TABLE `combat_log` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -2422,7 +2420,7 @@ CREATE TABLE `game_saves` (
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `game_saves_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2433,8 +2431,8 @@ LOCK TABLES `game_saves` WRITE;
 /*!40000 ALTER TABLE `game_saves` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `game_saves` VALUES
-(9,1,'Evil1','2026-03-04 20:15:06'),
-(10,1,'Evil2','2026-03-04 20:25:55');
+(1,1,'test4','2026-03-08 12:17:49'),
+(2,2,'first','2026-03-08 12:28:02');
 /*!40000 ALTER TABLE `game_saves` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -2457,7 +2455,7 @@ CREATE TABLE `inventory` (
   KEY `item_id` (`item_id`),
   CONSTRAINT `inventory_ibfk_1` FOREIGN KEY (`save_id`) REFERENCES `player_stats` (`save_id`) ON DELETE CASCADE,
   CONSTRAINT `inventory_ibfk_2` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2468,9 +2466,8 @@ LOCK TABLES `inventory` WRITE;
 /*!40000 ALTER TABLE `inventory` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `inventory` VALUES
-(1,9,67,1,1),
-(2,9,87,1,1),
-(3,10,33,1,0);
+(30,1,36,1,1),
+(31,2,15,1,0);
 /*!40000 ALTER TABLE `inventory` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -2753,7 +2750,9 @@ CREATE TABLE `player_stats` (
   PRIMARY KEY (`save_id`),
   KEY `location` (`location`),
   CONSTRAINT `player_stats_ibfk_1` FOREIGN KEY (`save_id`) REFERENCES `game_saves` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `player_stats_ibfk_2` FOREIGN KEY (`location`) REFERENCES `stables` (`id`)
+  CONSTRAINT `player_stats_ibfk_2` FOREIGN KEY (`location`) REFERENCES `stables` (`id`),
+  CONSTRAINT `chk_max_health` CHECK (`max_health` between 0 and 30000),
+  CONSTRAINT `chk_health_limit` CHECK (`health` <= `max_health`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2765,8 +2764,8 @@ LOCK TABLES `player_stats` WRITE;
 /*!40000 ALTER TABLE `player_stats` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `player_stats` VALUES
-(9,208,3,12,285,285,40,25,1,'2026-03-04 20:15:06'),
-(10,595,3,50,285,285,0,135,0,'2026-03-04 20:25:55');
+(1,174,1,75,236,236,0,30,0,'2026-03-08 12:17:49'),
+(2,852,1,0,236,236,0,50,0,'2026-03-08 12:28:02');
 /*!40000 ALTER TABLE `player_stats` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -2791,7 +2790,7 @@ CREATE TABLE `quest_progress` (
   KEY `quest_id` (`quest_id`),
   CONSTRAINT `quest_progress_ibfk_1` FOREIGN KEY (`save_id`) REFERENCES `player_stats` (`save_id`) ON DELETE CASCADE,
   CONSTRAINT `quest_progress_ibfk_2` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2802,11 +2801,7 @@ LOCK TABLES `quest_progress` WRITE;
 /*!40000 ALTER TABLE `quest_progress` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `quest_progress` VALUES
-(8,9,2,1,0,'2026-03-04 20:19:36','2026-03-04 20:19:36'),
-(9,9,5,1,0,'2026-03-04 20:19:48','2026-03-04 20:19:48'),
-(10,10,2,1,0,'2026-03-04 20:26:43','2026-03-04 20:26:43'),
-(11,10,5,1,0,'2026-03-04 20:26:52','2026-03-04 20:26:52'),
-(12,10,4,1,0,'2026-03-04 20:27:46','2026-03-04 20:27:46');
+(28,1,2,1,0,'2026-03-08 12:20:21','2026-03-08 12:20:21');
 /*!40000 ALTER TABLE `quest_progress` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -3883,7 +3878,7 @@ CREATE TABLE `users` (
   `created_at` datetime DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -3894,7 +3889,9 @@ LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 set autocommit=0;
 INSERT INTO `users` VALUES
-(1,'Evil','$2b$12$vnETlsEFfOzk6QOBV5T7PexGZirUgsbw3KfVqEhYP.dBfxYeNPhW.','2026-03-04 20:14:28');
+(1,'test4','$2b$12$J7X14teb6tLHkRXsvyFjROQkIFSgFetoJpNJyXc1lkeaGxPqOMHGe','2026-03-08 12:16:46'),
+(2,'test1','$2b$12$OCTVdTTEr4B1vQAx.uyU6O9cNY5E5bpH8kKi0KOeHvdyP8wS3nzIy','2026-03-08 12:26:55'),
+(3,'test','$2b$12$PEoUcI8n5ErL46i4jytmZuBxtiL16n72Tp3btqaF2G2BJ89fM/.mW','2026-03-08 12:34:32');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 commit;
@@ -3908,4 +3905,4 @@ commit;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-03-04 21:29:07
+-- Dump completed on 2026-03-08 12:40:09
