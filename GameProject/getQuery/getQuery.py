@@ -4,11 +4,11 @@ import mysql.connector
 # Connect to MySQL
 def get_query():
     connection = mysql.connector.connect(
-        host="db_host",
+        host="localhost",
         port=3306,
-        user="db_user",
-        password="db_password",
-        database="db_name"
+        user="username",
+        password="password",
+        database="fantasy_game"
     )
    
     return connection 

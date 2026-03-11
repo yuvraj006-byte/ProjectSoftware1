@@ -1,6 +1,3 @@
-import random
-import time
-
 class Color:
     CYAN = "\033[1;36m"
     YELLOW = "\033[1;33m"
@@ -15,7 +12,7 @@ def c(text, color):
 
 def starting_position(conn):
     def get_nation(what_empire):
-        cursor = conn.cursor(buffered=True)
+        cursor = conn.cursor()
         sql = """
         SELECT nation_name, region
         FROM nations
@@ -29,12 +26,12 @@ def starting_position(conn):
         return result  
 
     empire_dic = {
-    c("MU", Color.RED): c("Mustafar", Color.RED),
-    c("NE", Color.GREEN): c("Nepotis", Color.GREEN),
-    c("KA", Color.CYAN): c("Kamino", Color.CYAN),
-    c("AR", Color.MAGENTA): c("Arkania", Color.MAGENTA),
-    c("GE", Color.YELLOW): c("Geonosis", Color.YELLOW)
-}
+        "MU": "Mustafar",
+        "NE": "Nepotis",
+        "KA": "Kamino",
+        "AR": "Arkania",
+        "GE": "Geonosis"
+    }
     
     print()
     for key, value in empire_dic.items():
@@ -51,10 +48,7 @@ def starting_position(conn):
 
             nation, region = result
             print(f"\nYour Starting Nation Is: {c(nation, Color.GREEN)} In The Empire Of {c(empire_name, Color.CYAN)}!")
-            time.sleep(random.uniform(0.4, 0.7))
             print(f"It Is a {region} Region!")
-            time.sleep(random.uniform(0.4, 0.7))
             return nation, region
         else:
             print(c("This Empire Does Not Exist In The World of Open Skies", Color.RED))
-            time.sleep(random.uniform(0.4, 0.7))
